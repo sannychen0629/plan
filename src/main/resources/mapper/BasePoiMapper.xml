@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cennavi.plan.mapper.BasePoiMapper" >
+    <resultMap id="BasePoiMap" type="com.cennavi.plan.model.BasePoi" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="pid" property="pid" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="BIGINT" />
+        <result column="order" property="order" jdbcType="BIGINT" />
+        <result column="poiname" property="poiname" jdbcType="VARCHAR" />
+        <result column="poicode" property="poicode" jdbcType="VARCHAR" />
+        <collection property="poiList" column="id" javaType="list" select="querySubPois"></collection>
+    </resultMap>
+
+    <select id="querySubPois" resultMap="BasePoiMap">
+    select * from base_poi where pid=#{id}
+  </select>
+    <sql id="Base_Column_List" >
+        id, pid, level, order, poiname, poicode
+    </sql>
+
+    <select id="querySubPoi" resultMap="BasePoiMap">
+    select * from base_poi where pid=#{pid}
+  </select>
+
+    <select id="queryPoi" resultType="BasePoi">
+        select * from base_poi
+    </select>
+</mapper>
